@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONSTITUTION CHALLENGE - Pink Edition</title>
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- SUPABASE CONFIGURATION -->
+    <script>
+        const SUPABASE_URL = 'https://qwhogsvkvapdcyfsbesk.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_GfMyekScMolKVgLzvN0OgA_WZtn0rnL';
+
+        const supabaseClient = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
+    </script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Orbitron:wght@600;800;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: transparent;
+            color: #fff0f6;
+            overflow-x: hidden;
+        }
+
+        /* Full-screen desktop layout */
+        .app-main {
+            width: 100%;
+            max-width: none !important;
+            padding-left: clamp(1rem, 3vw, 4rem);
+            padding-right: clamp(1rem, 3vw, 4rem);
+            padding-top: clamp(1rem, 2vh, 1.5rem);
+            padding-bottom: clamp(1rem, 2vh, 1.5rem);
+        }
+
+        @media (min-width: 1024px) {
+            .app-main > #viewWelcome,
+            .app-main > #viewQuiz,
+            .app-main > #viewResult {
+                width: 100%;
+            }
+
+            #viewWelcome {
+                padding: clamp(2rem, 4vw, 4rem);
+            }
+        }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-fredoka { font-family: 'Fredoka', sans-serif; }
+
+        /* Transparent Panels (No Blur) */
+        .glass-panel-pink {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(255, 20, 147, 0.37), inset 0 0 15px rgba(255, 192, 203, 0.15);
+        }
+        .glass-card-pink {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .glow-neon-pink {
+            box-shadow: 0 0 25px rgba(255, 20, 147, 0.6), 0 0 10px rgba(255, 105, 180, 0.8);
+        }
+        .glow-gold-pink {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), inset 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+
+        /* Buttons & Interactions */
+        .btn-pink {
+            background: linear-gradient(135deg, #ff1493 0%, #ff69b4 50%, #ff8da1 100%);
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
+        }
+        .btn-pink:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.7);
+        }
+        .btn-pink:active {
+            transform: translateY(1px) scale(0.97);
+        }
+
+        .avatar-card {
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .avatar-card:hover {
+            transform: translateY(-4px) scale(1.05);
+        }
+        .avatar-card.selected {
+            border-color: #ffd700 !important;
+            background: rgba(255, 105, 180, 0.35) !important;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Animations */
+        .slide-in { animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .slide-out { animation: slideOut 0.3s cubic-bezier(0.7, 0, 0.84, 0) forwards; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes slideOut {
+            from { opacity: 1; transform: translateY(0) scale(1); }
+            to { opacity: 0; transform: translateY(-30px) scale(0.95); }
+        }
+
+        .pop-combo {
+            animation: popCombo 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes popCombo {
+            0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+            50% { transform: scale(1.3) rotate(5deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .timer-warning { animation: pulseWarningPink 0.8s infinite alternate; }
+        @keyframes pulseWarningPink {
+            from { color: #ff8da1; text-shadow: 0 0 5px rgba(255, 20, 147, 0.5); }
+            to { color: #ff1493; text-shadow: 0 0 25px rgba(255, 20, 147, 1); scale: 1.08; }
+        }
+
+
+        /* ============================================================
+           TARGET GAME UI - "JELAJAH KONSTITUSI"
+           Visual direction based on the supplied reference video.
+           ============================================================ */
+        body.target-game {
+            background: #0b76b5;
+            color: #2b180d;
+            overflow: hidden;
+        }
+
+        body.target-game > video {
+            z-index: 0;
+            object-fit: cover;
+            filter: saturate(1.02) contrast(1.01);
+        }
+
+        .legacy-header { display: none !important; }
+        .target-footer { display: none !important; }
+
+        #viewWelcome.target-welcome {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            width: 100vw !important;
+            height: 100vh;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            overflow: hidden;
+        }
+
+        .target-start-hit {
+            position: absolute;
+            left: 50%;
+            bottom: clamp(6.5vh, 8.2vh, 9vh);
+            transform: translateX(-50%);
+            width: min(32vw, 530px);
+            height: clamp(62px, 8.5vh, 94px);
+            min-width: 300px;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            cursor: pointer;
+            z-index: 30;
+        }
+        .target-start-hit:focus-visible {
+            outline: 4px solid #fff;
+            outline-offset: 5px;
+        }
+        .target-start-hit::after {
+            content: "Mulai Petualangan";
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: transparent;
+            font-weight: 900;
+            font-size: clamp(20px, 2.1vw, 34px);
+            text-transform: uppercase;
+        }
+
+        .name-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background: rgba(16, 29, 35, .58);
+            backdrop-filter: blur(4px);
+        }
+        .name-modal {
+            width: min(92vw, 540px);
+            padding: 28px;
+            border-radius: 28px;
+            background:
+                linear-gradient(rgba(255,247,215,.96), rgba(245,218,158,.96));
+            border: 5px solid #7c3f16;
+            box-shadow: 0 20px 70px rgba(0,0,0,.35), inset 0 0 0 3px #f3b43f;
+            color: #3a1c0c;
+        }
+        .name-modal h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 800;
+            text-align: center;
+            margin: 0 0 8px;
+        }
+        .name-modal p {
+            text-align: center;
+            margin: 0 0 18px;
+            font-weight: 600;
+        }
+        .name-modal input {
+            width: 100%;
+            box-sizing: border-box;
+            border: 3px solid #a65c20;
+            border-radius: 16px;
+            background: #fffdf4;
+            color: #3a1c0c;
+            padding: 14px 16px;
+            font-size: 18px;
+            font-weight: 700;
+            outline: none;
+        }
+        .name-modal input:focus { box-shadow: 0 0 0 4px rgba(255,184,45,.35); }
+        .name-modal-actions { display: flex; gap: 12px; margin-top: 16px; }
+        .parchment-btn {
+            flex: 1;
+            border: 3px solid #7c3f16;
+            border-radius: 999px;
+            padding: 13px 18px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform .18s ease;
+        }
+        .parchment-btn:hover { transform: translateY(-2px); }
+        .parchment-btn.primary { background: linear-gradient(#ffd84d, #f5a623); color: #3b1908; }
+        .parchment-btn.secondary { background: #f6e4bb; color: #6d3b19; }
+
+        #viewMap {
+            position: fixed;
+            inset: 0;
+            z-index: 25;
+            width: 100vw !important;
+            height: 100vh;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: #168bc5;
+            overflow: hidden;
+        }
+        .map-stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #168bc5 url('./assets/map-background.jpg') center center / cover no-repeat;
+        }
+        .map-garuda {
+            position: absolute;
+            top: 3.5%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(60px, 7vw, 110px);
+            filter: drop-shadow(0 5px 4px rgba(0,0,0,.25));
+            z-index: 2;
+        }
+        .map-title {
+            position: absolute;
+            left: 50%;
+            top: 7%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 3;
+            width: min(44vw, 650px);
+            padding: 20px 28px;
+            background: linear-gradient(180deg,#ffe8a5,#f8c56b);
+            border: 5px solid #7a3c14;
+            border-radius: 18px 18px 28px 28px;
+            box-shadow: 0 10px 0 rgba(95,42,10,.28), inset 0 0 0 3px rgba(255,255,255,.45);
+            color: #32160a;
+        }
+        .map-title h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: clamp(30px, 4.2vw, 64px);
+            line-height: .92;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+        .map-title h2 span { color: #f6c11a; text-shadow: 3px 3px 0 #7a250e; }
+        .map-title p { margin: 10px 0 0; font-weight: 800; font-size: clamp(10px, 1vw, 16px); }
+        .map-banner {
+            position: absolute;
+            top: 49%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+            width: min(32vw, 530px);
+            padding: 15px 20px;
+            border-radius: 999px;
+            background: linear-gradient(#ffd84d,#f4a41e);
+            border: 5px solid #71320f;
+            box-shadow: 0 7px 0 rgba(89,37,7,.35);
+            text-align: center;
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(18px, 2vw, 32px);
+            font-weight: 900;
+            color: #321408;
+        }
+        .map-banner small { display:block; font-size: .52em; margin-top: 2px; }
+
+        .mission-pin {
+            position: absolute;
+            z-index: 10;
+            min-width: 150px;
+            max-width: 220px;
+            padding: 7px 10px 7px 38px;
+            border: 3px solid #7d3210;
+            border-radius: 12px;
+            background: #fff2c8;
+            box-shadow: 0 5px 0 rgba(84,31,8,.25);
+            color: #3c190b;
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(10px, .85vw, 15px);
+            font-weight: 800;
+            text-align: left;
+            cursor: pointer;
+            transition: transform .18s ease, filter .18s ease;
+        }
+        .mission-pin:hover { transform: translateY(-4px) scale(1.03); filter: brightness(1.04); }
+        .mission-pin .num {
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: #d6291f;
+            color: #fff;
+            border: 3px solid #fff1c5;
+            box-shadow: 0 2px 5px rgba(0,0,0,.3);
+            font-weight: 900;
+        }
+        .mission-pin.locked { filter: grayscale(.55); opacity: .78; }
+        .mission-pin.active { animation: missionPulse 1.25s infinite alternate; }
+        @keyframes missionPulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+        .map-hud {
+            position: absolute;
+            left: 2%;
+            top: 3%;
+            z-index: 12;
+            padding: 12px 18px;
+            border-radius: 14px;
+            background: rgba(255,244,205,.94);
+            border: 3px solid #7d3210;
+            box-shadow: 0 5px 0 rgba(84,31,8,.22);
+            font-family: 'Fredoka', sans-serif;
+            color: #3c190b;
+        }
+        .map-hud strong { font-size: clamp(16px,1.4vw,24px); }
+        .map-hud span { display:block; font-size: clamp(10px,.8vw,14px); }
+
+        @media (max-width: 900px) {
+            body.target-game { overflow-y: auto; }
+            .target-start-hit { width: 58vw; bottom: 7vh; }
+            .map-title { width: 58vw; top: 10%; }
+            .map-banner { top: 52%; width: 52vw; }
+            .mission-pin { min-width: 110px; max-width: 145px; padding-left: 30px; }
+            .mission-pin .num { width: 27px; height: 27px; font-size: 12px; }
+        }
+        @media (max-width: 640px) {
+            #viewWelcome.target-welcome, #viewMap { position: absolute; min-height: 100vh; }
+            .target-start-hit { min-width: 230px; width: 58vw; height: 62px; }
+            .map-title { width: 72vw; top: 12%; padding: 12px; }
+            .map-title h2 { font-size: 28px; }
+            .map-banner { width: 62vw; top: 55%; font-size: 18px; padding: 10px; }
+            .mission-pin { min-width: 88px; max-width: 110px; font-size: 9px; }
+            .map-hud { display:none; }
+        }
+
+        /* Print styles */
+        @media print {
+            body { background: white !important; color: black !important; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            .glass-panel-pink, .glass-card-pink { background: white !important; border: 1px solid #ccc !important; box-shadow: none !important; color: black !important; }
+            table { width: 100% !important; border-collapse: collapse !important; }
+            th, td { border: 1px solid #333 !important; padding: 8px !important; color: black !important; }
+        }
+    </style>
+</head>
+<body class="min-h-screen relative flex flex-col justify-between selection:bg-pink-500 selection:text-white text-white target-game">
+    <!-- Video Background -->
+    <video id="bgVideo" autoplay loop muted playsinline class="fixed top-0 left-0 w-full h-full object-cover z-0 pointer-events-none">
+        <source src="./assets/download.mp4" type="video/mp4">
+    </video>
+    <!-- Dynamic Background Image -->
+    <img id="bgImage" class="fixed top-0 left-0 w-full h-full object-cover z-0 pointer-events-none hidden" src="" alt="Background">
+
+    
+    <!-- Top Bar Navigation -->
+    <header class="legacy-header relative z-10 w-full p-4 flex justify-between items-center glass-panel-pink border-b border-pink-500/20 no-print">
+        <div class="flex items-center space-x-3">
+            <div id="schoolLogoContainer" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-600 via-fuchsia-500 to-amber-300 p-0.5 flex items-center justify-center shadow-lg shadow-pink-600/40 glow-neon-pink cursor-pointer" onclick="triggerLogoUpload()">
+                <div class="w-full h-full bg-slate-950/80 rounded-[14px] flex items-center justify-center overflow-hidden">
+                    <img id="schoolLogoImg" src="" class="w-full h-full object-cover hidden" alt="Logo">
+                    <i id="schoolLogoDefaultIcon" class="fas fa-crown text-amber-300 text-lg"></i>
+                </div>
+            </div>
+            <div>
+                <h1 class="font-orbitron font-extrabold text-sm sm:text-lg text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-fuchsia-200 to-amber-200 tracking-wider">
+                    CONSTITUTION CHALLENGE
+                </h1>
+                <p class="text-xs text-pink-300 font-medium flex items-center gap-1">
+                    <i class="fas fa-sparkles text-amber-300 text-[10px]"></i> SMK Negeri 3 Palembang • XI AK 2
+                </p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-2 sm:space-x-4">
+            <!-- Audio Controller Toggle -->
+            <button id="btnAudioToggle" onclick="toggleAudio()" class="px-3 py-2 rounded-xl glass-card-pink hover:bg-pink-500/20 text-xs sm:text-sm font-semibold flex items-center gap-2 border border-pink-400/30 transition-all text-pink-200">
+                <i id="audioIcon" class="fas fa-volume-xmark text-pink-400"></i>
+                <span id="audioStatusText" class="hidden sm:inline">Audio: OFF</span>
+            </button>
+            
+            <!-- Dashboard Guru Button -->
+            <button onclick="openGuruModal()" class="px-3 py-2 rounded-xl bg-gradient-to-r from-fuchsia-600 to-pink-600 hover:from-fuchsia-500 hover:to-pink-500 text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-pink-900/40 transition-all border border-pink-300/30">
+                <i class="fas fa-user-shield text-amber-300"></i>
+                <span class="hidden sm:inline font-fredoka tracking-wide">Dashboard Guru</span>
+            </button>
+        </div>
+    </header>
+
+    <input type="file" id="logoFileInput" class="hidden" accept="image/*" onchange="handleLogoUpload(event)">
+
+    <main class="app-main relative z-10 mx-auto flex-grow flex flex-col justify-center">
+
+        <!-- ================= VIEW 1: TARGET REFERENCE WELCOME ================= -->
+        <div id="viewWelcome" class="target-welcome">
+            <button class="target-start-hit" onclick="openNameModal()" aria-label="Mulai Petualangan"></button>
+
+            <div id="nameModal" class="name-modal-backdrop hidden">
+                <div class="name-modal" role="dialog" aria-modal="true" aria-labelledby="nameModalTitle">
+                    <h3 id="nameModalTitle">🧭 Siap Menjelajah?</h3>
+                    <p>Masukkan nama lengkap peserta sebelum memulai Misi Konstitusi.</p>
+                    <input id="inputNama" type="text" maxlength="80" autocomplete="name"
+                           placeholder="Nama lengkap peserta..."
+                           onkeydown="if(event.key==='Enter') startChallenge()">
+                    <div class="name-modal-actions">
+                        <button class="parchment-btn secondary" onclick="closeNameModal()">Kembali</button>
+                        <button class="parchment-btn primary" onclick="startChallenge()">Mulai Misi →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW MAP: PETA PETUALANGAN ================= -->
+        <div id="viewMap" class="hidden">
+            <div class="map-stage">
+                <div class="map-garuda">🦅</div>
+
+                <div class="map-hud">
+                    <strong>🧭 Peta Petualangan</strong>
+                    <span id="mapStudentName">Peserta</span>
+                </div>
+
+                <div class="map-title">
+                    <h2>JELAJAH <span>KONSTITUSI</span></h2>
+                    <p>Misi Perubahan UUD NRI Tahun 1945</p>
+                </div>
+
+                <div class="map-banner">
+                    🗺️ PILIH MISI
+                    <small>Selesaikan 10 misi untuk menuntaskan petualangan</small>
+                </div>
+
+                <button class="mission-pin active" style="left:61%;bottom:8%;" onclick="openMission(1)">
+                    <span class="num">1</span>Gerbang Reformasi
+                </button>
+                <button class="mission-pin locked" style="left:68%;bottom:18%;" onclick="openMission(2)">
+                    <span class="num">2</span>Gedung MPR
+                </button>
+                <button class="mission-pin locked" style="left:73%;bottom:30%;" onclick="openMission(3)">
+                    <span class="num">3</span>Jalan Empat Perubahan
+                </button>
+                <button class="mission-pin locked" style="left:70%;bottom:43%;" onclick="openMission(4)">
+                    <span class="num">4</span>Ruang Sidang
+                </button>
+                <button class="mission-pin locked" style="left:79%;bottom:45%;" onclick="openMission(5)">
+                    <span class="num">5</span>Pembatasan Kekuasaan
+                </button>
+                <button class="mission-pin locked" style="left:81%;bottom:58%;" onclick="openMission(6)">
+                    <span class="num">6</span>Perlindungan HAM
+                </button>
+                <button class="mission-pin locked" style="left:75%;bottom:67%;" onclick="openMission(7)">
+                    <span class="num">7</span>Perubahan Kelembagaan
+                </button>
+                <button class="mission-pin locked" style="left:86%;bottom:72%;" onclick="openMission(8)">
+                    <span class="num">8</span>Taman Pancasila
+                </button>
+                <button class="mission-pin locked" style="left:71%;bottom:78%;" onclick="openMission(9)">
+                    <span class="num">9</span>Benteng Nilai
+                </button>
+                <button class="mission-pin locked" style="left:76%;bottom:89%;" onclick="openMission(10)">
+                    <span class="num">10</span>Istana Demokrasi
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 2: GAMEPLAY QUIZ ================= -->
+        <div id="viewQuiz" class="hidden space-y-5">
+            <!-- Header Status Game -->
+            <div class="glass-panel-pink p-4 rounded-2xl flex flex-wrap justify-between items-center gap-4">
+                <!-- User Profile Info -->
+                <div class="flex items-center space-x-3">
+                    <div id="activeAvatarBox" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-500 to-amber-300 flex items-center justify-center text-2xl shadow-md border border-pink-200/50">
+                        👑
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <p id="displayNamaSiswa" class="font-bold text-white text-sm sm:text-base">Siswa</p>
+                            <span id="comboBadge" class="hidden px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-pink-500 text-slate-950 font-orbitron font-extrabold text-[10px] pop-combo">
+                                🔥 COMBO x2
+                            </span>
+                        </div>
+                        <span id="activeAvatarTitle" class="text-xs text-pink-300 font-medium">Crown Princess</span>
+                    </div>
+                </div>
+
+                <!-- Circular Visual Timer & Hint Button -->
+                <div class="flex items-center space-x-3">
+                    <button id="btnHint" onclick="useHint()" class="px-3 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 text-xs font-bold flex items-center gap-1.5 transition-all">
+                        <i class="fas fa-lightbulb text-amber-300 animate-pulse"></i>
+                        <span>Petunjuk Clue (<span id="hintCount">1</span>)</span>
+                    </button>
+
+                    <div class="relative flex items-center justify-center">
+                        <svg class="w-14 h-14 transform -rotate-90">
+                            <circle cx="28" cy="28" r="22" stroke="currentColor" stroke-width="4" class="text-pink-950/60" fill="transparent"/>
+                            <circle id="timerProgress" cx="28" cy="28" r="22" stroke="currentColor" stroke-width="4" class="text-pink-400 transition-all duration-1000" stroke-dasharray="138" stroke-dashoffset="0" stroke-linecap="round" fill="transparent"/>
+                        </svg>
+                        <span id="timerText" class="absolute font-orbitron font-extrabold text-xs text-white">10:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar Soal dengan Star Icon -->
+            <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-semibold">
+                    <span id="labelQuestionIndex" class="text-pink-300 uppercase tracking-wider font-orbitron">MISI 1 DARI 10</span>
+                    <span id="labelScoreCurrent" class="text-amber-300 font-orbitron">ESTIMASI SKOR: 0</span>
+                </div>
+                <div class="w-full bg-slate-950/80 rounded-full h-4 p-0.5 border border-pink-500/30 relative">
+                    <div id="progressBar" class="bg-gradient-to-r from-pink-600 via-fuchsia-500 to-amber-300 h-3 rounded-full transition-all duration-300 relative" style="width: 10%;">
+                        <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-5 h-5 bg-amber-300 rounded-full border-2 border-pink-600 flex items-center justify-center shadow-md">
+                            <i class="fas fa-star text-[9px] text-pink-900"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Soal Container -->
+            <div id="quizCard" class="glass-panel-pink p-6 sm:p-10 rounded-3xl relative overflow-hidden transition-all duration-300 border-2 border-pink-400/40">
+                <div class="absolute -top-10 -right-10 opacity-10 pointer-events-none">
+                    <i class="fas fa-scroll text-9xl text-pink-300"></i>
+                </div>
+
+                <div class="space-y-6 relative z-10">
+                    <div class="flex justify-between items-center">
+                        <span class="inline-block px-3 py-1 rounded-lg bg-pink-500/20 text-pink-200 text-xs font-bold border border-pink-400/30 font-orbitron">
+                            📜 STIMULUS & PERNYATAAN HOTS
+                        </span>
+                        <span id="hintBanner" class="hidden text-xs bg-amber-400/20 text-amber-200 border border-amber-400/40 px-3 py-1 rounded-lg font-semibold animate-pulse">
+                            💡 Clue Diaktifkan! Perhatikan kata kunci.
+                        </span>
+                    </div>
+
+                    <div id="stimulusBox" class="bg-slate-950/50 p-4 rounded-xl border border-pink-500/20 text-xs sm:text-sm text-pink-200/90 leading-relaxed italic">
+                        <!-- Stimulus text injected here -->
+                    </div>
+
+                    <h3 id="questionText" class="text-base sm:text-xl font-semibold leading-relaxed text-white min-h-[70px] flex items-center">
+                        Memuat pertanyaan...
+                    </h3>
+
+                    <!-- Pilihan Jawaban (BENAR / SALAH) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <button onclick="submitAnswer(true)" id="btnTrue" class="btn-pink glass-card-pink p-5 rounded-2xl border-2 border-emerald-400/40 hover:border-emerald-300 flex items-center justify-between group text-emerald-200">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-10 h-10 rounded-xl bg-emerald-500/30 border border-emerald-400/40 flex items-center justify-center font-extrabold text-white text-xl">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                                <span class="font-bold text-lg font-orbitron">BENAR</span>
+                            </div>
+                            <i class="fas fa-heart text-pink-300 opacity-0 group-hover:opacity-100 transition-all"></i>
+                        </button>
+
+                        <button onclick="submitAnswer(false)" id="btnFalse" class="btn-pink glass-card-pink p-5 rounded-2xl border-2 border-pink-500/50 hover:border-pink-300 flex items-center justify-between group text-pink-200">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-10 h-10 rounded-xl bg-pink-600/40 border border-pink-400/40 flex items-center justify-center font-extrabold text-white text-xl">
+                                    <i class="fas fa-xmark"></i>
+                                </span>
+                                <span class="font-bold text-lg font-orbitron">SALAH</span>
+                            </div>
+                            <i class="fas fa-heart text-pink-300 opacity-0 group-hover:opacity-100 transition-all"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 3: HASIL & EVALUASI ================= -->
+        <div id="viewResult" class="hidden glass-panel-pink p-6 sm:p-10 rounded-3xl text-center space-y-6 glow-neon-pink">
+            <div id="resultBadgeIcon" class="inline-block p-4 rounded-full bg-gradient-to-tr from-pink-500/30 to-amber-400/30 border border-amber-300/50">
+                <i class="fas fa-crown text-6xl text-amber-300 animate-bounce"></i>
+            </div>
+
+            <div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-200 via-fuchsia-100 to-amber-200 font-orbitron">
+                    MISI KONSTITUSI SELESAI!
+                </h2>
+                <p id="resultSubtitle" class="text-pink-200/80 text-xs sm:text-sm mt-1">Laporan Asesmen Perubahan UUD NRI 1945</p>
+            </div>
+
+            <!-- Score Summary Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto">
+                <div class="glass-card-pink p-4 rounded-2xl border border-pink-400/30">
+                    <span class="text-xs text-pink-300 block mb-1">Skor Akhir</span>
+                    <span id="finalScore" class="font-orbitron font-extrabold text-4xl text-amber-300">0</span>
+                    <span class="text-xs text-pink-300 font-bold block mt-1">/ 100 Poin</span>
+                </div>
+                <div class="glass-card-pink p-4 rounded-2xl border border-pink-400/30">
+                    <span class="text-xs text-pink-300 block mb-1">Predikat Kehormatan</span>
+                    <span id="finalCategory" class="font-bold text-base text-emerald-300 block mt-2">Sangat Baik</span>
+                </div>
+                <div class="glass-card-pink p-4 rounded-2xl border border-pink-400/30">
+                    <span class="text-xs text-pink-300 block mb-1">Status KKM (75)</span>
+                    <span id="finalStatus" class="font-bold text-base block mt-2">TUNTAS</span>
+                </div>
+            </div>
+
+            <!-- Breakdown Detail -->
+            <div class="glass-card-pink p-4 rounded-2xl max-w-xl mx-auto flex justify-around text-xs sm:text-sm border border-pink-400/20">
+                <div>
+                    <span class="text-pink-300 block">Jawaban Benar</span>
+                    <span id="countCorrect" class="font-bold text-emerald-300 text-lg">0</span>
+                </div>
+                <div class="border-r border-pink-400/20"></div>
+                <div>
+                    <span class="text-pink-300 block">Jawaban Salah</span>
+                    <span id="countWrong" class="font-bold text-pink-400 text-lg">0</span>
+                </div>
+                <div class="border-r border-pink-400/20"></div>
+                <div>
+                    <span class="text-pink-300 block">Waktu Selesai</span>
+                    <span id="timeSpent" class="font-bold text-amber-300 text-lg">00:00</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto pt-2">
+                <button onclick="toggleReviewModal()" class="px-6 py-3.5 rounded-xl glass-card-pink hover:bg-pink-500/20 text-white font-semibold text-sm flex items-center justify-center gap-2 border border-pink-400/30 transition-all">
+                    <i class="fas fa-eye text-amber-300"></i> Evaluasi Kunci Jawaban
+                </button>
+                <button onclick="resetToWelcome()" class="btn-pink px-6 py-3.5 rounded-xl text-white font-orbitron font-bold text-sm flex items-center justify-center gap-2 shadow-lg">
+                    <i class="fas fa-rotate-right"></i> Ulangi Misi
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Confetti & Sparkles Overlay -->
+    <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <!-- Modal Review Kunci Jawaban -->
+    <div id="modalReview" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel-pink w-full max-w-2xl max-h-[85vh] rounded-3xl p-6 flex flex-col space-y-4 border border-pink-400/40">
+            <div class="flex justify-between items-center border-b border-pink-500/20 pb-3">
+                <h3 class="font-orbitron font-bold text-lg text-white flex items-center gap-2">
+                    <i class="fas fa-clipboard-check text-amber-300"></i> Evaluasi Kunci Jawaban
+                </h3>
+                <button onclick="toggleReviewModal()" class="text-pink-300 hover:text-white p-2 text-xl">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+
+            <div id="reviewContainer" class="overflow-y-auto space-y-3 pr-2 flex-grow text-xs sm:text-sm">
+                <!-- Dynamic Review Items -->
+            </div>
+
+            <button onclick="toggleReviewModal()" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-pink-200 font-semibold rounded-xl text-xs uppercase tracking-wider border border-pink-500/30">
+                Tutup Evaluasi
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Dashboard Guru -->
+    <div id="modalGuru" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        
+        <!-- Auth Form PIN (Default: 2026) -->
+        <div id="guruAuthForm" class="glass-panel-pink max-w-sm w-full p-6 sm:p-8 rounded-3xl text-center space-y-5 border border-pink-400/40">
+            <div class="w-14 h-14 rounded-full bg-pink-600/30 text-pink-300 flex items-center justify-center mx-auto text-2xl border border-pink-400/40">
+                <i class="fas fa-lock"></i>
+            </div>
+            <div>
+                <h3 class="font-orbitron font-bold text-xl text-white">Akses Guru</h3>
+                <p class="text-xs text-pink-200/70 mt-1">Masukkan PIN Otentikasi</p>
+            </div>
+            <input type="password" id="inputPinGuru" placeholder="• • • •" maxlength="6" class="w-full text-center text-2xl tracking-widest bg-slate-950 border border-pink-500/40 rounded-xl py-3 text-pink-200 focus:outline-none focus:border-pink-400 font-orbitron">
+            <div class="flex gap-2">
+                <button onclick="closeGuruModal()" class="w-1/2 py-3 glass-card-pink text-pink-200 font-semibold rounded-xl text-xs">BATAL</button>
+                <button onclick="verifyGuruPin()" class="w-1/2 py-3 btn-pink text-white font-semibold rounded-xl text-xs">MASUK</button>
+            </div>
+        </div>
+
+        <!-- Dashboard Guru Main Panel -->
+        <div id="guruDashboardContent" class="glass-panel-pink w-full max-w-5xl max-h-[90vh] rounded-3xl p-6 sm:p-8 hidden flex-col space-y-5 overflow-hidden border border-pink-400/40">
+            
+            <!-- Dashboard Header -->
+            <div class="flex flex-wrap justify-between items-center gap-4 border-b border-pink-500/20 pb-4 no-print">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-pink-600 flex items-center justify-center text-white text-xl shadow-lg">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-orbitron font-bold text-lg sm:text-xl text-white">DASHBOARD REKAPITULASI GURU</h2>
+                        <p class="text-xs text-pink-300">Asesmen Sumatif • XI AK 2 SMKN 3 Palembang</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="triggerLogoUpload()" class="px-3 py-2 rounded-xl bg-pink-500/20 hover:bg-pink-500/30 text-pink-200 border border-pink-400/30 text-xs font-semibold flex items-center gap-2">
+                        <i class="fas fa-image"></i> Upload Logo
+                    </button>
+                    <button onclick="exportCSV()" class="px-3 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/30 text-xs font-semibold flex items-center gap-2">
+                        <i class="fas fa-file-excel"></i> Export CSV
+                    </button>
+                    <button onclick="printReport()" class="px-3 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/30 text-xs font-semibold flex items-center gap-2">
+                        <i class="fas fa-print"></i> Cetak PDF
+                    </button>
+                    <button onclick="closeGuruModal()" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-pink-200 text-xs font-semibold border border-pink-500/30">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Printable Header Title -->
+            <div class="hidden print-only text-center mb-6">
+                <h1 class="text-2xl font-bold">REKAPITULASI HASIL ASESMEN SUMATIF PENDIDIKAN PANCASILA</h1>
+                <p class="text-sm">Kelas XI Akuntansi 2 - SMK Negeri 3 Palembang</p>
+                <p class="text-xs text-gray-600">Materi: Perubahan UUD NRI Tahun 1945</p>
+            </div>
+
+            <!-- Main Scrollable Dashboard Content -->
+            <div class="overflow-y-auto space-y-5 pr-2 flex-grow">
+                
+                <!-- Stat Cards Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <div class="glass-card-pink p-3 rounded-2xl border border-pink-400/20 text-center">
+                        <span class="text-xs text-pink-300/80 block">Total Siswa</span>
+                        <span id="statTotal" class="font-orbitron font-bold text-xl text-white mt-1 block">0</span>
+                    </div>
+                    <div class="glass-card-pink p-3 rounded-2xl border border-pink-400/20 text-center">
+                        <span class="text-xs text-pink-300/80 block">Rata-rata Skor</span>
+                        <span id="statAvg" class="font-orbitron font-bold text-xl text-pink-300 mt-1 block">0</span>
+                    </div>
+                    <div class="glass-card-pink p-3 rounded-2xl border border-pink-400/20 text-center">
+                        <span class="text-xs text-pink-300/80 block">Siswa Tuntas</span>
+                        <span id="statTuntas" class="font-orbitron font-bold text-xl text-emerald-300 mt-1 block">0</span>
+                    </div>
+                    <div class="glass-card-pink p-3 rounded-2xl border border-pink-400/20 text-center">
+                        <span class="text-xs text-pink-300/80 block">Belum Tuntas</span>
+                        <span id="statBelumTuntas" class="font-orbitron font-bold text-xl text-pink-400 mt-1 block">0</span>
+                    </div>
+                    <div class="glass-card-pink p-3 rounded-2xl border border-pink-400/20 text-center">
+                        <span class="text-xs text-pink-300/80 block">Nilai Max / Min</span>
+                        <span id="statMaxMin" class="font-orbitron font-bold text-sm text-amber-300 mt-2 block">0 / 0</span>
+                    </div>
+                    <div class="glass-card-pink p-3 rounded-2xl border border-pink-400/20 text-center">
+                        <span class="text-xs text-pink-300/80 block">% Ketuntasan</span>
+                        <span id="statPercent" class="font-orbitron font-bold text-xl text-emerald-300 mt-1 block">0%</span>
+                    </div>
+                </div>
+
+                <!-- Chart Canvas -->
+                <div class="glass-card-pink p-4 rounded-2xl border border-pink-400/20 no-print">
+                    <h4 class="font-orbitron font-semibold text-xs text-pink-200 uppercase tracking-wider mb-2">Distribusi Frekuensi Kategori Nilai</h4>
+                    <div class="h-40 w-full relative">
+                        <canvas id="chartCanvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Table Header Controls -->
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-3 no-print">
+                    <div class="relative w-full sm:w-64">
+                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-pink-400 text-xs"></i>
+                        <input type="text" id="inputSearchSiswa" onkeyup="renderGuruTable()" placeholder="Cari nama siswa..." class="w-full bg-slate-950 border border-pink-500/30 rounded-xl py-2 pl-9 pr-3 text-xs text-white focus:outline-none focus:border-pink-400">
+                    </div>
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <select id="selectSort" onchange="renderGuruTable()" class="bg-slate-950 border border-pink-500/30 rounded-xl py-2 px-3 text-xs text-pink-200 focus:outline-none focus:border-pink-400">
+                            <option value="newest">Waktu Terupdate</option>
+                            <option value="scoreDesc">Nilai Tertinggi</option>
+                            <option value="scoreAsc">Nilai Terendah</option>
+                            <option value="nameAsc">Nama (A-Z)</option>
+                        </select>
+                        <button onclick="confirmResetData()" class="px-3 py-2 bg-pink-600/20 hover:bg-pink-600/30 text-pink-300 border border-pink-500/30 rounded-xl text-xs font-semibold whitespace-nowrap">
+                            <i class="fas fa-trash-can"></i> Reset Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rekap Table -->
+                <div class="glass-card-pink rounded-2xl overflow-hidden border border-pink-400/20">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs sm:text-sm">
+                            <thead class="bg-slate-950/80 uppercase font-orbitron text-pink-300 text-[10px] tracking-wider border-b border-pink-500/20">
+                                <tr>
+                                    <th class="p-3">#</th>
+                                    <th class="p-3">Guardis Siswa</th>
+                                    <th class="p-3">Skor</th>
+                                    <th class="p-3">Predikat</th>
+                                    <th class="p-3">Status KKM</th>
+                                    <th class="p-3">Waktu</th>
+                                    <th class="p-3">Tanggal Misi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyGuru" class="divide-y divide-pink-500/10 text-pink-100/90">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Information -->
+    <footer class="target-footer relative z-10 w-full py-4 px-4 text-center text-xs sm:text-sm text-pink-200/80 glass-panel-pink border-t border-pink-500/10 no-print">
+        <span class="font-medium">Dikembangkan Oleh: Febriza Laila Husna, S.Pd., M.Pd.</span>
+    </footer>
+
+    <script>
+        /* ==========================================================================
+           1. DATA SET SOAL DENGAN STIMULUS, PERNYATAAN, DAN KUNCI JAWABAN BARU
+           ========================================================================== */
+        const QUESTION_BANK = [
+            { 
+                id: 1, 
+                title: "1. Latar Belakang Perubahan UUD",
+                stimulus: "Pada masa Reformasi, muncul tuntutan agar penyelenggaraan negara lebih demokratis dan kekuasaan tidak terpusat pada satu pihak. Salah satu langkah yang dilakukan adalah melakukan perubahan terhadap UUD 1945.",
+                text: "Jika tuntutan Reformasi tersebut dihubungkan dengan perubahan UUD, perubahan konstitusi dapat dipahami sebagai salah satu upaya memperbaiki sistem ketatanegaraan Indonesia.", 
+                key: true, 
+                hint: "Perhatikan hubungan antara tuntutan demokrasi Reformasi dengan upaya perbaikan sistem ketatanegaraan." 
+            },
+            { 
+                id: 2, 
+                title: "2. Kewenangan Mengubah UUD",
+                stimulus: "Dalam diskusi kelas, Andi berpendapat bahwa DPR merupakan lembaga yang berwenang mengubah UUD karena DPR membuat undang-undang. Sementara itu, Sinta mengatakan bahwa kewenangan mengubah dan menetapkan UUD berada pada MPR.",
+                text: "Berdasarkan perbandingan kedua pendapat tersebut dengan ketentuan UUD NRI Tahun 1945, pendapat Andi lebih tepat karena DPR merupakan lembaga legislatif.", 
+                key: false, 
+                hint: "Cek kembali lembaga manakah di Indonesia yang berwenang mengubah dan menetapkan UUD." 
+            },
+            { 
+                id: 3, 
+                title: "3. Empat Kali Perubahan",
+                stimulus: "Perubahan UUD NRI Tahun 1945 berlangsung pada tahun 1999, 2000, 2001, dan 2002. Perubahan dilakukan melalui beberapa tahap.",
+                text: "Jika urutan waktu tersebut dianalisis, dapat disimpulkan bahwa perubahan UUD NRI Tahun 1945 dilakukan secara bertahap sebanyak empat kali.", 
+                key: true, 
+                hint: "Perhatikan rentang tahun sidang tahunan MPR pada masa amandemen." 
+            },
+            { 
+                id: 4, 
+                title: "4. Mekanisme Perubahan",
+                stimulus: "Dalam simulasi sidang, anggota MPR mengusulkan perubahan UUD. Namun, pimpinan sidang langsung melakukan pemungutan suara tanpa memperhatikan persyaratan yang telah ditentukan dalam UUD NRI Tahun 1945.",
+                text: "Karena usulan berasal dari anggota MPR, perubahan tersebut tetap sah meskipun persyaratan perubahan UUD tidak dipenuhi.", 
+                key: false, 
+                hint: "Perhatikan apakah prosedur formal dan persyaratan konstitusional wajib dipenuhi dalam perubahan UUD." 
+            },
+            { 
+                id: 5, 
+                title: "5. Pembatasan Kekuasaan",
+                stimulus: "Setelah perubahan UUD NRI Tahun 1945, Presiden dan Wakil Presiden dapat menjabat selama lima tahun dan dapat dipilih kembali hanya satu kali untuk jabatan yang sama.",
+                text: "Jika ketentuan tersebut dihubungkan dengan prinsip pembatasan kekuasaan, perubahan tersebut menunjukkan bahwa masa kekuasaan Presiden dan Wakil Presiden tidak dapat berlangsung tanpa batas periode.", 
+                key: true, 
+                hint: "Hubungkan masa jabatan dua periode dengan prinsip pembatasan kekuasaan." 
+            },
+            { 
+                id: 6, 
+                title: "6. Pemilihan Presiden",
+                stimulus: "Sebelum perubahan UUD, Presiden dan Wakil Presiden dipilih oleh MPR. Setelah perubahan UUD, keduanya dipilih secara langsung oleh rakyat.",
+                text: "Perubahan mekanisme tersebut menunjukkan bahwa keterlibatan rakyat dalam menentukan Presiden dan Wakil Presiden menjadi lebih langsung setelah perubahan UUD.", 
+                key: true, 
+                hint: "Analisis perbandingan pemilihan oleh MPR vs pemilihan langsung oleh rakyat." 
+            },
+            { 
+                id: 7, 
+                title: "7. Kedudukan MPR",
+                stimulus: "Sebelum perubahan UUD, MPR dikenal sebagai lembaga tertinggi negara. Setelah perubahan, setiap lembaga negara menjalankan kewenangannya berdasarkan UUD.",
+                text: "Berdasarkan perbandingan kedua kondisi tersebut, MPR setelah perubahan UUD tetap menjadi lembaga tertinggi yang memiliki kekuasaan tidak terbatas atas semua lembaga negara.", 
+                key: false, 
+                hint: "Ingat konsep supremasi konstitusi pasca amandemen, di mana kedudukan lembaga negara sejajar." 
+            },
+            { 
+                id: 8, 
+                title: "8. Pancasila",
+                stimulus: "Perubahan UUD NRI Tahun 1945 mengubah sejumlah ketentuan mengenai sistem ketatanegaraan. Namun, Pembukaan UUD NRI Tahun 1945 tetap dipertahankan dan memuat rumusan Pancasila.",
+                text: "Berdasarkan hubungan kedua informasi tersebut, perubahan UUD NRI Tahun 1945 tidak dapat diartikan sebagai perubahan terhadap Pancasila sebagai dasar negara.", 
+                key: true, 
+                hint: "Pembukaan UUD 1945 yang memuat Pancasila tidak mengalami perubahan." 
+            },
+            { 
+                id: 9, 
+                title: "9. Bentuk Negara",
+                stimulus: "Perubahan UUD NRI Tahun 1945 mengubah berbagai ketentuan mengenai lembaga negara dan sistem ketatanegaraan. Meskipun demikian, bentuk Negara Kesatuan Republik Indonesia tetap dipertahankan.",
+                text: "Perubahan sistem ketatanegaraan tersebut berarti Indonesia berubah dari negara kesatuan menjadi negara federal.", 
+                key: false, 
+                hint: "Pasal 37 ayat (5) UUD 1945 menegaskan bahwa bentuk negara kesatuan tidak dapat diubah." 
+            },
+            { 
+                id: 10, 
+                title: "10. Dampak Perubahan terhadap Demokrasi",
+                stimulus: "Setelah perubahan UUD NRI Tahun 1945, Presiden dan Wakil Presiden dipilih secara langsung oleh rakyat dan masa jabatan dibatasi paling banyak dua periode.",
+                text: "Jika kedua perubahan tersebut dianalisis secara bersama-sama, dapat disimpulkan bahwa perubahan UUD antara lain berkaitan dengan peningkatan partisipasi rakyat dan pembatasan kekuasaan.", 
+                key: true, 
+                hint: "Kaitkan pemilihan langsung (partisipasi rakyat) dan pembatasan masa jabatan (pembatasan kekuasaan)." 
+            }
+        ];
+
+        const AVATARS = [
+            { icon: "👑", name: "Crown Princess" },
+            { icon: "⚔️", name: "Pink Warrior" },
+            { icon: "🛡️", name: "Shield Maiden" },
+            { icon: "✨", name: "Sparkle Knight" }
+        ];
+
+        // Global Game State
+        let selectedAvatarIdx = 0;
+        let currentQuestionIdx = 0;
+        let userAnswers = [];
+        let totalScore = 0;
+        let streakCount = 0;
+        let currentStudentName = "";
+        let timerInterval = null;
+        let timeRemaining = 600;
+        let isAudioMuted = true;
+        let hintsLeft = 1;
+
+        /* ==========================================================================
+           2. WEB AUDIO API SYNTHESIZER (CUTE / FUN CHIMES & BGM)
+           ========================================================================== */
+        let audioCtx = null;
+        let bgmInterval = null;
+        let bgmStep = 0;
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playTone(freq, type, duration, vol = 0.1) {
+            if (isAudioMuted) return;
+            try {
+                initAudioContext();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function playSFX(type) {
+            if (isAudioMuted) return;
+            initAudioContext();
+            
+            if (type === 'click') {
+                playTone(783.99, 'sine', 0.08, 0.15); // G5
+            } else if (type === 'correct') {
+                playTone(523.25, 'sine', 0.1, 0.15); // C5
+                setTimeout(() => playTone(659.25, 'sine', 0.1, 0.15), 80); // E5
+                setTimeout(() => playTone(783.99, 'sine', 0.15, 0.2), 160); // G5
+                setTimeout(() => playTone(1046.50, 'sine', 0.2, 0.25), 240); // C6
+            } else if (type === 'wrong') {
+                playTone(300, 'sawtooth', 0.15, 0.15);
+                setTimeout(() => playTone(220, 'sawtooth', 0.2, 0.15), 120);
+            } else if (type === 'victory') {
+                const notes = [523.25, 659.25, 783.99, 880, 1046.50];
+                notes.forEach((f, i) => setTimeout(() => playTone(f, 'triangle', 0.3, 0.2), i * 100));
+            } else if (type === 'hint') {
+                playTone(880, 'sine', 0.1, 0.15);
+                setTimeout(() => playTone(1174.66, 'sine', 0.2, 0.2), 100);
+            }
+        }
+
+        function startBGM() {
+            if (bgmInterval) clearInterval(bgmInterval);
+            if (isAudioMuted) return;
+            
+            const notes = [329.63, 392.00, 440.00, 523.25, 440.00, 392.00, 329.63, 261.63];
+            bgmInterval = setInterval(() => {
+                if (isAudioMuted) return;
+                initAudioContext();
+                const freq = notes[bgmStep % notes.length];
+                playTone(freq, 'triangle', 0.15, 0.03);
+                bgmStep++;
+            }, 200);
+        }
+
+        function stopBGM() {
+            if (bgmInterval) {
+                clearInterval(bgmInterval);
+                bgmInterval = null;
+            }
+        }
+
+        function toggleAudio() {
+            isAudioMuted = !isAudioMuted;
+            const icon = document.getElementById('audioIcon');
+            const statusText = document.getElementById('audioStatusText');
+            
+            if (!isAudioMuted) {
+                initAudioContext();
+                icon.className = 'fas fa-volume-high text-pink-300';
+                statusText.innerText = 'Audio: ON';
+                playSFX('click');
+                startBGM();
+            } else {
+                icon.className = 'fas fa-volume-xmark text-pink-400';
+                statusText.innerText = 'Audio: OFF';
+                stopBGM();
+            }
+        }
+
+        /* ==========================================================================
+           3. CANVAS FLOATING PINK HEART & SPARKLES ANIMATION
+           ========================================================================== */
+        const canvas = document.getElementById('pinkParticleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class PinkParticle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 4 + 2;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.speedY = Math.random() * -0.8 - 0.3;
+                this.isHeart = Math.random() > 0.6;
+                this.color = Math.random() > 0.5 ? 'rgba(255, 105, 180, ' : 'rgba(255, 215, 0, ';
+                this.alpha = Math.random() * 0.6 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.y < -10) {
+                    this.y = canvas.height + 10;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color + this.alpha + ')';
+                ctx.beginPath();
+                if (this.isHeart) {
+                    const h = this.size * 1.5;
+                    ctx.arc(this.x - h/4, this.y, h/4, Math.PI, 0, false);
+                    ctx.arc(this.x + h/4, this.y, h/4, Math.PI, 0, false);
+                    ctx.lineTo(this.x, this.y + h/2);
+                } else {
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                }
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 60; i++) particles.push(new PinkParticle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        /* ==========================================================================
+           4. AVATAR SELECTION & GAME FLOW LOGIC
+           ========================================================================== */
+        function selectAvatar(idx) {
+            playSFX('click');
+            selectedAvatarIdx = idx;
+            document.querySelectorAll('.avatar-card').forEach((card, i) => {
+                if (i === idx) card.classList.add('selected');
+                else card.classList.remove('selected');
+            });
+        }
+
+        async function openNameModal() {
+            const modal = document.getElementById('nameModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => document.getElementById('inputNama').focus(), 50);
+        }
+
+        function closeNameModal() {
+            document.getElementById('nameModal').classList.add('hidden');
+        }
+
+        async function startChallenge() {
+            const namaInput = document.getElementById('inputNama').value.trim();
+            if (!namaInput) {
+                alert('Harap masukkan Nama Lengkap Anda terlebih dahulu!');
+                document.getElementById('inputNama').focus();
+                return;
+            }
+
+            if (SUPABASE_URL.includes('GANTI_DENGAN') || SUPABASE_ANON_KEY.includes('GANTI_DENGAN')) {
+                alert('Supabase belum dikonfigurasi. Isi SUPABASE_URL dan SUPABASE_ANON_KEY terlebih dahulu.');
+                return;
+            }
+
+            const studentKey = namaInput.toLowerCase().replace(/\s+/g, ' ').trim();
+
+            const { data: existingStudent, error: checkError } = await supabaseClient
+                .from('student_scores')
+                .select('id')
+                .eq('student_key', studentKey)
+                .maybeSingle();
+
+            if (checkError) {
+                console.error('Gagal mengecek data siswa:', checkError);
+                alert('Tidak dapat terhubung ke database. Periksa konfigurasi Supabase dan koneksi internet.');
+                return;
+            }
+
+            if (existingStudent) {
+                alert('Nama ini sudah menyelesaikan Misi Perubahan UUD 1945! Setiap siswa hanya dapat mengerjakan 1 kali.');
+                return;
+            }
+
+            currentStudentName = namaInput;
+            document.getElementById('displayNamaSiswa').innerText = currentStudentName;
+            document.getElementById('mapStudentName').innerText = `Penjelajah: ${currentStudentName}`;
+
+            const avatar = AVATARS[selectedAvatarIdx];
+            document.getElementById('activeAvatarBox').innerText = avatar.icon;
+            document.getElementById('activeAvatarTitle').innerText = avatar.name;
+
+            playSFX('click');
+            closeNameModal();
+            document.getElementById('viewWelcome').classList.add('hidden');
+            document.getElementById('viewMap').classList.remove('hidden');
+
+            currentQuestionIdx = 0;
+            userAnswers = [];
+            totalScore = 0;
+            streakCount = 0;
+            hintsLeft = 1;
+            timeRemaining = 600;
+        }
+
+        function openMission(missionNumber) {
+            if (missionNumber !== 1) {
+                alert('Misi berikutnya terbuka setelah kamu menyelesaikan misi sebelumnya.');
+                return;
+            }
+
+            playSFX('click');
+            currentQuestionIdx = missionNumber - 1;
+            document.getElementById('viewMap').classList.add('hidden');
+            document.getElementById('viewQuiz').classList.remove('hidden');
+            startTimer();
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const questionObj = QUESTION_BANK[currentQuestionIdx];
+            const qCard = document.getElementById('quizCard');
+
+            // Set dynamic background for the question
+            const bgImage = document.getElementById('bgImage');
+            const bgVideo = document.getElementById('bgVideo');
+            bgImage.src = `./assets/background${currentQuestionIdx + 1}.png`;
+            bgImage.classList.remove('hidden');
+            if (bgVideo) bgVideo.classList.add('hidden');
+
+            qCard.classList.remove('slide-in', 'slide-out');
+            void qCard.offsetWidth;
+            qCard.classList.add('slide-in');
+
+            document.getElementById('labelQuestionIndex').innerText = questionObj.title;
+            document.getElementById('labelScoreCurrent').innerText = `ESTIMASI SKOR: ${totalScore}`;
+            document.getElementById('stimulusBox').innerHTML = `<strong class="text-amber-200 block mb-1">Stimulus:</strong> ${questionObj.stimulus}`;
+            document.getElementById('questionText').innerText = questionObj.text;
+            document.getElementById('hintBanner').classList.add('hidden');
+
+            const progressPct = ((currentQuestionIdx + 1) / QUESTION_BANK.length) * 100;
+            document.getElementById('progressBar').style.width = `${progressPct}%`;
+        }
+
+        function useHint() {
+            if (hintsLeft <= 0) return;
+            hintsLeft--;
+            document.getElementById('hintCount').innerText = hintsLeft;
+            document.getElementById('btnHint').disabled = true;
+            document.getElementById('btnHint').classList.add('opacity-50');
+
+            playSFX('hint');
+            const hintBanner = document.getElementById('hintBanner');
+            hintBanner.innerText = `💡 Clue: ${QUESTION_BANK[currentQuestionIdx].hint}`;
+            hintBanner.classList.remove('hidden');
+        }
+
+        function submitAnswer(choice) {
+            const questionObj = QUESTION_BANK[currentQuestionIdx];
+            const isCorrect = (choice === questionObj.key);
+
+            if (isCorrect) {
+                playSFX('correct');
+                totalScore += 10;
+                streakCount++;
+                if (streakCount >= 2) {
+                    const comboBadge = document.getElementById('comboBadge');
+                    comboBadge.innerText = `🔥 COMBO x${streakCount}!`;
+                    comboBadge.classList.remove('hidden');
+                }
+            } else {
+                playSFX('wrong');
+                streakCount = 0;
+                document.getElementById('comboBadge').classList.add('hidden');
+            }
+
+            userAnswers.push({
+                questionId: questionObj.id,
+                title: questionObj.title,
+                userChoice: choice,
+                correctKey: questionObj.key,
+                isCorrect: isCorrect
+            });
+
+            const qCard = document.getElementById('quizCard');
+            qCard.classList.add('slide-out');
+
+            setTimeout(() => {
+                currentQuestionIdx++;
+                if (currentQuestionIdx < QUESTION_BANK.length) {
+                    renderQuestion();
+                } else {
+                    finishGame();
+                }
+            }, 300);
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            const timerText = document.getElementById('timerText');
+            const timerProgress = document.getElementById('timerProgress');
+            const totalSeconds = 600;
+
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+
+                const mins = Math.floor(timeRemaining / 60);
+                const secs = timeRemaining % 60;
+                timerText.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+                const dashoffset = 138 * (1 - timeRemaining / totalSeconds);
+                timerProgress.style.strokeDashoffset = dashoffset;
+
+                if (timeRemaining <= 120) {
+                    timerText.classList.add('timer-warning');
+                } else {
+                    timerText.classList.remove('timer-warning');
+                }
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Waktu Misi Telah Habis! Mengumpulkan hasil...');
+                    while(userAnswers.length < QUESTION_BANK.length) {
+                        const qObj = QUESTION_BANK[userAnswers.length];
+                        userAnswers.push({
+                            questionId: qObj.id,
+                            title: qObj.title,
+                            userChoice: null,
+                            correctKey: qObj.key,
+                            isCorrect: false
+                        });
+                    }
+                    finishGame();
+                }
+            }, 1000);
+        }
+
+        /* ==========================================================================
+           5. GAME COMPLETION & RECAP
+           ========================================================================== */
+        async function finishGame() {
+            clearInterval(timerInterval);
+            stopBGM();
+
+            const timeSpentSeconds = 600 - timeRemaining;
+            const minsSpent = Math.floor(timeSpentSeconds / 60);
+            const secsSpent = timeSpentSeconds % 60;
+            const timeFormatted = `${minsSpent.toString().padStart(2, '0')}:${secsSpent.toString().padStart(2, '0')}`;
+
+            const correctCount = userAnswers.filter(a => a.isCorrect).length;
+            const wrongCount = QUESTION_BANK.length - correctCount;
+
+            let category = "";
+            let categoryColor = "";
+            if (totalScore >= 90) { category = "Sangat Baik"; categoryColor = "text-emerald-300"; }
+            else if (totalScore >= 80) { category = "Baik"; categoryColor = "text-pink-300"; }
+            else if (totalScore >= 75) { category = "Cukup"; categoryColor = "text-amber-300"; }
+            else { category = "Perlu Bimbingan"; categoryColor = "text-pink-400"; }
+
+            const isTuntas = totalScore >= 75;
+
+            document.getElementById('finalScore').innerText = totalScore;
+            document.getElementById('finalCategory').innerText = category;
+            document.getElementById('finalCategory').className = `font-bold text-base block mt-2 ${categoryColor}`;
+
+            const statusElem = document.getElementById('finalStatus');
+            statusElem.innerText = isTuntas ? "TUNTAS (LULUS KKM)" : "BELUM TUNTAS";
+            statusElem.className = `font-bold text-base block mt-2 ${isTuntas ? 'text-emerald-300' : 'text-pink-400'}`;
+
+            document.getElementById('countCorrect').innerText = correctCount;
+            document.getElementById('countWrong').innerText = wrongCount;
+            document.getElementById('timeSpent').innerText = timeFormatted;
+
+            const studentKey = currentStudentName.toLowerCase().replace(/\s+/g, ' ').trim();
+
+            const recordData = {
+                student_key: studentKey,
+                nama: currentStudentName,
+                avatar: AVATARS[selectedAvatarIdx].icon,
+                skor: totalScore,
+                kategori: category,
+                status: isTuntas ? "TUNTAS" : "BELUM TUNTAS",
+                waktu: timeFormatted
+            };
+
+            const { error: insertError } = await supabaseClient
+                .from('student_scores')
+                .insert([recordData]);
+
+            if (insertError) {
+                console.error('Gagal menyimpan nilai ke Supabase:', insertError);
+
+                if (insertError.code === '23505') {
+                    alert('Data siswa ini sudah tercatat di database. Setiap siswa hanya dapat mengerjakan 1 kali.');
+                } else {
+                    alert('Nilai gagal disimpan ke server. Pastikan koneksi internet aktif dan konfigurasi Supabase benar.');
+                }
+                return;
+            }
+
+            document.getElementById('viewQuiz').classList.add('hidden');
+            document.getElementById('viewResult').classList.remove('hidden');
+
+            // Set finish background
+            const bgImage = document.getElementById('bgImage');
+            bgImage.src = `./assets/background_finish.png`;
+            bgImage.classList.remove('hidden');
+
+            playSFX('victory');
+            if (isTuntas) triggerConfetti();
+        }
+
+        function triggerConfetti() {
+            const confettiCanvas = document.getElementById('confettiCanvas');
+            const cCtx = confettiCanvas.getContext('2d');
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+
+            let pieces = Array.from({ length: 90 }, () => ({
+                x: Math.random() * confettiCanvas.width,
+                y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+                size: Math.random() * 8 + 4,
+                color: ['#ff1493', '#ff69b4', '#ffd700', '#22c55e', '#ffffff'][Math.floor(Math.random() * 5)],
+                speedY: Math.random() * 3 + 2,
+                speedX: Math.random() * 2 - 1,
+                rotation: Math.random() * 360
+            }));
+
+            let frame = 0;
+            function renderConfetti() {
+                cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+                pieces.forEach(p => {
+                    p.y += p.speedY; p.x += p.speedX; p.rotation += 2;
+                    cCtx.save();
+                    cCtx.translate(p.x, p.y);
+                    cCtx.rotate((p.rotation * Math.PI) / 180);
+                    cCtx.fillStyle = p.color;
+                    cCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    cCtx.restore();
+                });
+                frame++;
+                if (frame < 180) requestAnimationFrame(renderConfetti);
+                else cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            }
+            renderConfetti();
+        }
+
+        function toggleReviewModal() {
+            const modal = document.getElementById('modalReview');
+            const container = document.getElementById('reviewContainer');
+
+            if (modal.classList.contains('hidden')) {
+                container.innerHTML = userAnswers.map((ans, idx) => {
+                    const qObj = QUESTION_BANK[idx];
+                    return `
+                        <div class="glass-card-pink p-4 rounded-xl border ${ans.isCorrect ? 'border-emerald-400/40' : 'border-pink-500/40'}">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="font-bold text-amber-300 font-orbitron">${qObj.title}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${ans.isCorrect ? 'bg-emerald-500/20 text-emerald-300' : 'bg-pink-500/20 text-pink-300'}">
+                                    ${ans.isCorrect ? 'BENAR (+10)' : 'SALAH (+0)'}
+                                </span>
+                            </div>
+                            <p class="text-white/80 italic text-xs mb-1">Stimulus: ${qObj.stimulus}</p>
+                            <p class="text-white font-medium mb-3">${qObj.text}</p>
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <div class="bg-slate-950/60 p-2 rounded-lg border border-pink-500/20">
+                                    <span class="text-pink-300/70 block">Jawaban Anda:</span>
+                                    <span class="font-bold ${ans.userChoice === qObj.key ? 'text-emerald-300' : 'text-pink-400'}">
+                                        ${ans.userChoice === null ? 'Tidak Dijawab' : (ans.userChoice ? 'BENAR' : 'SALAH')}
+                                    </span>
+                                </div>
+                                <div class="bg-slate-950/60 p-2 rounded-lg border border-pink-500/20">
+                                    <span class="text-pink-300/70 block">Kunci Jawaban:</span>
+                                    <span class="font-bold text-emerald-300">${qObj.key ? 'BENAR' : 'SALAH'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function resetToWelcome() {
+            document.getElementById('viewResult').classList.add('hidden');
+            document.getElementById('viewWelcome').classList.remove('hidden');
+            document.getElementById('inputNama').value = '';
+
+            // Reset background to video
+            const bgImage = document.getElementById('bgImage');
+            const bgVideo = document.getElementById('bgVideo');
+            if (bgImage) bgImage.classList.add('hidden');
+            if (bgVideo) bgVideo.classList.remove('hidden');
+        }
+
+        /* ==========================================================================
+           6. TEACHER DASHBOARD & REKAP
+           ========================================================================== */
+        function openGuruModal() {
+            playSFX('click');
+            document.getElementById('modalGuru').classList.remove('hidden');
+            document.getElementById('guruAuthForm').classList.remove('hidden');
+            document.getElementById('guruDashboardContent').classList.add('hidden');
+            document.getElementById('inputPinGuru').value = '';
+        }
+
+        function closeGuruModal() {
+            document.getElementById('modalGuru').classList.add('hidden');
+        }
+
+        function verifyGuruPin() {
+            const pin = document.getElementById('inputPinGuru').value;
+            if (pin === '2026') {
+                playSFX('click');
+                document.getElementById('guruAuthForm').classList.add('hidden');
+                document.getElementById('guruDashboardContent').classList.remove('hidden');
+                document.getElementById('guruDashboardContent').classList.add('flex');
+                renderGuruDashboard();
+            } else {
+                playSFX('wrong');
+                alert('PIN Salah! Akses ditolak');
+            }
+        }
+
+        async function getSupabaseRecords() {
+            const { data, error } = await supabaseClient
+                .from('student_scores')
+                .select('id, student_key, nama, avatar, skor, kategori, status, waktu, created_at')
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            return (data || []).map(r => ({
+                ...r,
+                tanggal: r.created_at
+                    ? new Date(r.created_at).toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })
+                    : '-'
+            }));
+        }
+
+        async function renderGuruDashboard() {
+            try {
+                const records = await getSupabaseRecords();
+                const totalSiswa = records.length;
+                const avgScore = totalSiswa
+                    ? (records.reduce((acc, r) => acc + Number(r.skor || 0), 0) / totalSiswa).toFixed(1)
+                    : 0;
+                const tuntasCount = records.filter(r => Number(r.skor) >= 75).length;
+                const belumTuntasCount = totalSiswa - tuntasCount;
+                const maxScore = totalSiswa ? Math.max(...records.map(r => Number(r.skor || 0))) : 0;
+                const minScore = totalSiswa ? Math.min(...records.map(r => Number(r.skor || 0))) : 0;
+                const percentTuntas = totalSiswa ? ((tuntasCount / totalSiswa) * 100).toFixed(0) : 0;
+
+                document.getElementById('statTotal').innerText = totalSiswa;
+                document.getElementById('statAvg').innerText = avgScore;
+                document.getElementById('statTuntas').innerText = tuntasCount;
+                document.getElementById('statBelumTuntas').innerText = belumTuntasCount;
+                document.getElementById('statMaxMin').innerText = `${maxScore} / ${minScore}`;
+                document.getElementById('statPercent').innerText = `${percentTuntas}%`;
+
+                renderGuruTable(records);
+                renderChartCanvas(records);
+            } catch (error) {
+                console.error('Dashboard error:', error);
+                document.getElementById('tableBodyGuru').innerHTML = `
+                    <tr><td colspan="7" class="p-6 text-center text-pink-300">
+                        Gagal mengambil data dari Supabase. Periksa koneksi dan konfigurasi database.
+                    </td></tr>`;
+            }
+        }
+
+        async function renderGuruTable(records = null) {
+            try {
+                if (!records) records = await getSupabaseRecords();
+
+                const searchVal = document.getElementById('inputSearchSiswa').value.toLowerCase();
+                const sortVal = document.getElementById('selectSort').value;
+
+                records = records.filter(r => r.nama.toLowerCase().includes(searchVal));
+
+                if (sortVal === 'scoreDesc') records.sort((a,b) => Number(b.skor) - Number(a.skor));
+                else if (sortVal === 'scoreAsc') records.sort((a,b) => Number(a.skor) - Number(b.skor));
+                else if (sortVal === 'nameAsc') records.sort((a,b) => a.nama.localeCompare(b.nama));
+                else if (sortVal === 'newest') records.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+
+                const tbody = document.getElementById('tableBodyGuru');
+                if (records.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-pink-300/60">Belum ada rekapitulasi data siswa.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = records.map((r, i) => `
+                    <tr class="hover:bg-pink-500/10 transition-colors">
+                        <td class="p-3 font-mono text-pink-300/70">${i + 1}</td>
+                        <td class="p-3 font-semibold text-white flex items-center gap-2">
+                            <span>${r.avatar || '👑'}</span>
+                            <span>${r.nama}</span>
+                        </td>
+                        <td class="p-3 font-orbitron font-bold text-amber-300">${r.skor}</td>
+                        <td class="p-3 text-pink-200">${r.kategori}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${r.skor >= 75 ? 'bg-emerald-500/20 text-emerald-300' : 'bg-pink-500/20 text-pink-300'}">
+                                ${r.status}
+                            </span>
+                        </td>
+                        <td class="p-3 font-mono text-pink-300/80">${r.waktu}</td>
+                        <td class="p-3 text-xs text-pink-300/60">${r.tanggal}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Table error:', error);
+                document.getElementById('tableBodyGuru').innerHTML =
+                    `<tr><td colspan="7" class="p-6 text-center text-pink-300">Gagal memuat data.</td></tr>`;
+            }
+        }
+
+        function renderChartCanvas(records) {
+            const chartCanvas = document.getElementById('chartCanvas');
+            const cCtx = chartCanvas.getContext('2d');
+            chartCanvas.width = chartCanvas.parentElement.clientWidth;
+            chartCanvas.height = chartCanvas.parentElement.clientHeight;
+
+            const categories = { 'Sangat Baik': 0, 'Baik': 0, 'Cukup': 0, 'Bimbingan': 0 };
+            records.forEach(r => {
+                if (r.skor >= 90) categories['Sangat Baik']++;
+                else if (r.skor >= 80) categories['Baik']++;
+                else if (r.skor >= 75) categories['Cukup']++;
+                else categories['Bimbingan']++;
+            });
+
+            const keys = Object.keys(categories);
+            const values = Object.values(categories);
+            const maxVal = Math.max(...values, 1);
+
+            cCtx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+            const barWidth = chartCanvas.width / keys.length - 20;
+
+            keys.forEach((key, idx) => {
+                const val = values[idx];
+                const barHeight = (val / maxVal) * (chartCanvas.height - 40);
+                const x = idx * (barWidth + 20) + 10;
+                const y = chartCanvas.height - barHeight - 20;
+
+                const grad = cCtx.createLinearGradient(0, y, 0, chartCanvas.height);
+                grad.addColorStop(0, '#ff1493');
+                grad.addColorStop(1, '#8b0042');
+
+                cCtx.fillStyle = grad;
+                cCtx.beginPath();
+                cCtx.roundRect(x, y, barWidth, barHeight, [8, 8, 0, 0]);
+                cCtx.fill();
+
+                cCtx.fillStyle = '#ffffff';
+                cCtx.font = 'bold 12px Orbitron, sans-serif';
+                cCtx.textAlign = 'center';
+                cCtx.fillText(val, x + barWidth / 2, y - 6);
+
+                cCtx.fillStyle = '#ffb6c1';
+                cCtx.font = '10px Poppins, sans-serif';
+                cCtx.fillText(key, x + barWidth / 2, chartCanvas.height - 5);
+            });
+        }
+
+        /* Logo Upload Handler */
+        function triggerLogoUpload() {
+            document.getElementById('logoFileInput').click();
+        }
+
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgUrl = e.target.result;
+                    document.getElementById('schoolLogoImg').src = imgUrl;
+                    document.getElementById('schoolLogoImg').classList.remove('hidden');
+                    document.getElementById('schoolLogoDefaultIcon').classList.add('hidden');
+                    localStorage.setItem('constitution_school_logo', imgUrl);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function loadStoredLogo() {
+            const savedLogo = localStorage.getItem('constitution_school_logo');
+            if (savedLogo) {
+                document.getElementById('schoolLogoImg').src = savedLogo;
+                document.getElementById('schoolLogoImg').classList.remove('hidden');
+                document.getElementById('schoolLogoDefaultIcon').classList.add('hidden');
+            }
+        }
+        loadStoredLogo();
+
+        function startRealtimeDashboard() {
+            supabaseClient
+                .channel('student_scores_realtime')
+                .on('postgres_changes', {
+                    event: '*',
+                    schema: 'public',
+                    table: 'student_scores'
+                }, () => {
+                    const dashboard = document.getElementById('guruDashboardContent');
+                    if (dashboard && !dashboard.classList.contains('hidden')) {
+                        renderGuruDashboard();
+                    }
+                })
+                .subscribe();
+        }
+
+        startRealtimeDashboard();
+
+        async function exportCSV() {
+            try {
+                const records = await getSupabaseRecords();
+                if (records.length === 0) {
+                    alert('Tidak ada data rekapitulasi untuk di-export!');
+                    return;
+                }
+
+                let csvContent = "data:text/csv;charset=utf-8,No,Nama Siswa,Skor,Kategori,Status KKM,Waktu Tempuh,Tanggal\n";
+                records.forEach((r, idx) => {
+                    const safeNama = String(r.nama).replace(/"/g, '""');
+                    csvContent += `${idx + 1},"${safeNama}",${r.skor},"${r.kategori}","${r.status}","${r.waktu}","${r.tanggal}"\n`;
+                });
+
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `Rekap_Constitution_Challenge_XI_AK_2.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error(error);
+                alert('Gagal mengambil data dari Supabase untuk export.');
+            }
+        }
+
+        function printReport() {
+            window.print();
+        }
+
+        async function confirmResetData() {
+            if (!confirm('Apakah Anda yakin ingin menghapus seluruh data rekapitulasi siswa? Tindakan ini tidak dapat dibatalkan.')) {
+                return;
+            }
+
+            try {
+                const { error } = await supabaseClient
+                    .from('student_scores')
+                    .delete()
+                    .not('id', 'is', null);
+
+                if (error) throw error;
+
+                await renderGuruDashboard();
+                alert('Data rekapitulasi berhasil direset dari database Supabase!');
+            } catch (error) {
+                console.error('Gagal reset data:', error);
+                alert('Gagal mereset data. Periksa RLS/policy DELETE di Supabase.');
+            }
+        }
+    </script>
+</body>
+</html>
