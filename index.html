@@ -455,15 +455,17 @@
                 <span id="audioStatusText" class="hidden sm:inline">Audio: OFF</span>
             </button>
             
-            <!-- Dashboard Guru Button -->
-            <button onclick="openGuruModal()" class="px-3 py-2 rounded-xl bg-gradient-to-r from-fuchsia-600 to-pink-600 hover:from-fuchsia-500 hover:to-pink-500 text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-pink-900/40 transition-all border border-pink-300/30">
-                <i class="fas fa-user-shield text-amber-300"></i>
-                <span class="hidden sm:inline font-fredoka tracking-wide">Dashboard Guru</span>
-            </button>
+
         </div>
     </header>
 
     <input type="file" id="logoFileInput" class="hidden" accept="image/*" onchange="handleLogoUpload(event)">
+
+    <!-- Dashboard Guru Floating Button -->
+    <button onclick="openGuruModal()" class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-full bg-gradient-to-r from-fuchsia-600 to-pink-600 hover:from-fuchsia-500 hover:to-pink-500 text-sm font-bold flex items-center gap-2 shadow-lg shadow-pink-900/40 transition-all border border-pink-300/30 text-white">
+        <i class="fas fa-user-shield text-amber-300"></i>
+        <span class="hidden sm:inline font-fredoka tracking-wide">Dashboard Guru</span>
+    </button>
 
     <main class="app-main relative z-10 mx-auto flex-grow flex flex-col justify-center">
 
